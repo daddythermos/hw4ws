@@ -11,6 +11,7 @@
 #include <sstream>
 #include <algorithm>  // needed for transform()
 #include <exception>
+#include <math.h>
 #include "WordSearch.h"
 
 WordSearch::WordSearch() {
@@ -73,6 +74,26 @@ void WordSearch::read_words(const string &file_name)
 }
 
 
+set<string> files_with_paydirt_words (const set<string>& wordset){
+	set<string> files;
+	bool foundWord;
+	    //books in the filesystem
+	    for (const auto& book : books){
+	    	foundWord = false;
+	    	for (unsigned int i = 0;!foundWord && i < book.second.size() ;i++){
+	    		for (auto iter = wordset.begin(); iter != wordset.end(); iter++ ){
+	    			if(book.second[i] == *iter){
+	    				foundWord = true;
+	    				files.insert(book.first);
+	    				break;
+	    			}
+	    		}
+	    	}
+	    }
+	return files;
+}
+
+
 unsigned long WordSearch::word_count() const {
     unsigned long num = 0;
     for (const auto& book : books) {
@@ -110,29 +131,22 @@ pair<unsigned int,set<string>> WordSearch::most_frequent_words() const throw (le
 }
 
 set<string> WordSearch::least_frequent_words(int count) const {
-    set<string> words;
-    /* TODO complete this function */
-
-    
-    return words;
+	set<string> words;
+	    for (const auto& wordFreq : wordFreqs) {
+	    	if (wordFreq.second <= count) {
+	    		words.insert(wordFreq.first);
+	    	}
+	    }
+	    return words;
 }
 
 set<string> WordSearch::files_with_most_frequent_words()  throw(length_error) {
-    set<string> files;
-
-    /* TODO complete this function */
-    
-    return files;
+    return this->files_with_paydirt_words(this->most_frequent_words().second);
 }
 
 set<string> WordSearch::files_with_least_frequent_words(int N) const
 {
-    set<string> files;
-    
-    /* TODO complete this function */
-    
-    return files;
-    
+    return this->files_with_paydirt_words(this->least_frequent_words(N));
 }
 
 string WordSearch::most_probable_word_after(const string& word) const {

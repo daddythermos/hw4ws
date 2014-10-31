@@ -28,6 +28,9 @@ private:
     
     void read_words (const string& file_name);
     void load_ignored_words(const string& file_name);
+    //filenames of files that contain any of the words we desire
+    set<string> files_with_paydirt_words (const set<string>& wordset);
+
 public:
     WordSearch ();
     WordSearch (const string& topdir, const string& ignore_file);
