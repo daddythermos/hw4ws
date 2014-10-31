@@ -74,7 +74,7 @@ void WordSearch::read_words(const string &file_name)
 }
 
 
-set<string> files_with_paydirt_words (const set<string>& wordset){
+set<string> WordSearch::files_with_paydirt_words (const set<string>& wordset) const{
 	set<string> files;
 	bool foundWord;
 	    //books in the filesystem
@@ -92,6 +92,23 @@ set<string> files_with_paydirt_words (const set<string>& wordset){
 	    }
 	return files;
 }
+
+pair<unsigned int,set<string>> WordSearch::largest_int_words (const map<string,unsigned int>& wordMap) const{
+    set<string> words;
+    unsigned int highInt = 0;
+    for (const auto& wordVal : wordMap) {
+    	if (wordVal.second > highInt) {
+    		highInt = wordVal.second;
+    	}
+    }
+    for (const auto& wordVal : wordMap) {
+    	if (wordVal.second == highInt) {
+    		words.insert(wordVal.first);
+    	}
+    }
+    return make_pair(highInt, words);
+}
+
 
 
 unsigned long WordSearch::word_count() const {
@@ -115,19 +132,7 @@ set<string> WordSearch::words_of_length (int L) const {
 }
 
 pair<unsigned int,set<string>> WordSearch::most_frequent_words() const throw (length_error) {
-    set<string> words;
-    unsigned int highFreq = 0;
-    for (const auto& wordFreq : wordFreqs) {
-    	if (wordFreq.second > highFreq) {
-    		highFreq = wordFreq.second;
-    	}
-    }
-    for (const auto& wordFreq : wordFreqs) {
-    	if (wordFreq.second == highFreq) {
-    		words.insert(wordFreq.first);
-    	}
-    }
-    return make_pair(highFreq, words);
+    return largest_int_words(wordFreqs);
 }
 
 set<string> WordSearch::least_frequent_words(int count) const {
@@ -150,8 +155,14 @@ set<string> WordSearch::files_with_least_frequent_words(int N) const
 }
 
 string WordSearch::most_probable_word_after(const string& word) const {
-    
-    /* TODO complete this function */
-    
-    return "";
+    map<string, unsigned int> afterWords;
+    for (const auto& book : books){
+    	for (unsigned int i = 0; i < book.second.size() - 1; i++){
+    		if(book.second[i] == word){
+    			afterWords.emplace(book.second[i+1], 0);
+    			afterWords.at(book.second[i+1])++;
+    		}
+    	}
+    }
+    return *(this->largest_int_words(afterWords).second.begin());
 }
