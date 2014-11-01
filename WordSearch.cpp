@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 SoCIS. All rights reserved.
 //
 
+//potential insert problem in books; create entry for each filename
+
 #include <iostream>
 #include <fstream>
 #include <sstream>

@@ -16,7 +16,7 @@
  *   TOP_DIR = "C:/Users/YourName/blah/blah/.....";
  *
  */
-const string TOP_DIR = "/path/to/your/unzipped/data/files";
+const string TOP_DIR = "C:\\CIS263\\hw4ws\\datafolder";
 
 /* TODO: comment out only one of the following two directive lines 
  * to switch testing using smaller dataset (only 10 text files) or 
