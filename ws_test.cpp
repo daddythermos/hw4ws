@@ -21,8 +21,8 @@ const string TOP_DIR = "C:\\CIS263\\hw4ws\\datafolder";
 /* TODO: comment out only one of the following two directive lines 
  * to switch testing using smaller dataset (only 10 text files) or 
  * the entire dataset (150+ text files) */
-//#undef PARTIAL_DATASET
-#define PARTIAL_DATASET
+#undef PARTIAL_DATASET
+//#define PARTIAL_DATASET
 
 #ifdef PARTIAL_DATASET
 WordSearch gb_lib{TOP_DIR + "/ebooks/partial", TOP_DIR + "/ignored.txt"};

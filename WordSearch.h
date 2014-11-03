@@ -30,7 +30,7 @@ private:
     void load_ignored_words(const string& file_name);
     //filenames of files that contain any of the words we desire
     set<string> files_with_paydirt_words (const set<string>& wordset) const;
-    pair<unsigned int,set<string>> largest_int_words (const map<string,unsigned int>& wordMap) const;
+    pair<unsigned int,set<string>> largest_int_words (const map<string,unsigned int>& wordMap) const throw (length_error);
 
 public:
     WordSearch ();

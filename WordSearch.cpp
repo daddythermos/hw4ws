@@ -45,7 +45,9 @@ void WordSearch::load_ignored_words(const string& fname) {
 
 void WordSearch::read_words(const string &file_name)
 {
-    ifstream txt (file_name); /* file is aumatically open */
+
+    books.emplace(file_name, vector<string>{});
+	ifstream txt (file_name); /* file is aumatically open */
     
     string one_line;
     
@@ -95,8 +97,10 @@ set<string> WordSearch::files_with_paydirt_words (const set<string>& wordset) co
 	return files;
 }
 
-pair<unsigned int,set<string>> WordSearch::largest_int_words (const map<string,unsigned int>& wordMap) const{
-    set<string> words;
+pair<unsigned int,set<string>> WordSearch::largest_int_words (const map<string,unsigned int>& wordMap) const throw (length_error){
+    if (wordMap.empty() )
+    	throw length_error ("length error");
+	set<string> words;
     unsigned int highInt = 0;
     for (const auto& wordVal : wordMap) {
     	if (wordVal.second > highInt) {
